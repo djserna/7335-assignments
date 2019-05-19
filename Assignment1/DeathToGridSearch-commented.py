@@ -8,6 +8,7 @@ Created on Sat Jan 12 10:50:56 2019
 import numpy as np
 from sklearn.metrics import accuracy_score
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import KFold  #EDIT: I had to import KFold 
  
 # adapt this to run 
@@ -29,7 +30,7 @@ from sklearn.model_selection import KFold  #EDIT: I had to import KFold
 M = np.array([[1,2],[3,4],[4,5],[4,5],[4,5],[4,5],[4,5],[4,5],[4,5],[4,5],[4,5],[4,5],[4,5],[4,5],[4,5],[4,5]])
 
 #EDIT: array L includes the Y's, they're all ones and as such is only for example (an ML algorithm would always predict 1).
-L = np.ones(M.shape[0])
+L = np.random.choice([0,1], size=(M.shape[0],), p=[1./3, 2./3])
 
 #EDIT: a single value, 5, to use for 5-fold (k-fold) cross validation
 n_folds = 5
@@ -101,6 +102,7 @@ clfs = [];
 clfs.append({RandomForestClassifier: {'n_estimators': 200, 'max_depth': 3, 'random_state': 10}})
 clfs.append({RandomForestClassifier: {'n_estimators': 250, 'max_depth': 2, 'random_state': 5}})
 clfs.append({RandomForestClassifier: {'n_estimators': 300, 'max_depth': 1, 'random_state': 7}})
+clfs.append({LogisticRegression: {'max_iter': 150, 'n_jobs': 2, 'random_state': 12}})
 runAllCLFS(clfs, data)
 
 
