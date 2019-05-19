@@ -91,7 +91,7 @@ results = run(RandomForestClassifier, data, clf_hyper={})
 
 print(results)
 
-def runAllCLFS(clfs, data):
+def runAllCLFS(clfsAndHypers, data):
     for i in clfs:
         for k, v in i.items():
             results = run(k, data, v)
