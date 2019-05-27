@@ -170,8 +170,8 @@ def createPlots(accuracyDict):
 
 clfs = [];
 clfs.append({RandomForestClassifier: {'n_estimators': 200, 'max_depth': 3, 'random_state': 10}})
-clfs.append({RandomForestClassifier: {'n_estimators': 250, 'max_depth': 2, 'random_state': 5}})
-clfs.append({RandomForestClassifier: {'n_estimators': 300, 'max_depth': 1, 'random_state': 7}})
+clfs.append({RandomForestClassifier: {'n_estimators': 250, 'max_depth': 2, 'random_state': 10}})
+clfs.append({RandomForestClassifier: {'n_estimators': 300, 'max_depth': 1, 'random_state': 10}})
 clfs.append({LogisticRegression: {'max_iter': 150, 'n_jobs': 2, 'random_state': 12}})
 clfs.append({LogisticRegression: {'max_iter': 300, 'n_jobs': 2, 'random_state': 12}})
 allResults = runAllClfs(clfs, data)
