@@ -92,7 +92,7 @@ results = run(RandomForestClassifier, data, clf_hyper={})
 
 print(results)
 
-def runAllCLFS(clfsAndHypers, data):
+def runAllClfs(clfsAndHypers, data):
     allResults = []
     for i in clfs:
         for k, v in i.items():
@@ -106,7 +106,7 @@ clfs.append({RandomForestClassifier: {'n_estimators': 200, 'max_depth': 3, 'rand
 clfs.append({RandomForestClassifier: {'n_estimators': 250, 'max_depth': 2, 'random_state': 5}})
 clfs.append({RandomForestClassifier: {'n_estimators': 300, 'max_depth': 1, 'random_state': 7}})
 clfs.append({LogisticRegression: {'max_iter': 150, 'n_jobs': 2, 'random_state': 12}})
-allResults = runAllCLFS(clfs, data)
+allResults = runAllClfs(clfs, data)
 
 
 #original attempt using 2 dictionaries, but the clf collection seems more like a list.
