@@ -34,6 +34,7 @@ import matplotlib.pyplot as plt
 #EDIT: array L includes the Y's, they're all ones and as such is only for example (an ML algorithm would always predict 1).
 #L = np.random.choice([0,1], size=(M.shape[0],), p=[1./3, 2./3])
 
+#we will use the classic iris dataset as our simple data for classification.
 iris = datasets.load_iris()
 M = iris.data
 L = iris.target
@@ -172,6 +173,7 @@ clfs.append({RandomForestClassifier: {'n_estimators': 200, 'max_depth': 3, 'rand
 clfs.append({RandomForestClassifier: {'n_estimators': 250, 'max_depth': 2, 'random_state': 5}})
 clfs.append({RandomForestClassifier: {'n_estimators': 300, 'max_depth': 1, 'random_state': 7}})
 clfs.append({LogisticRegression: {'max_iter': 150, 'n_jobs': 2, 'random_state': 12}})
+clfs.append({LogisticRegression: {'max_iter': 300, 'n_jobs': 2, 'random_state': 12}})
 allResults = runAllClfs(clfs, data)
 accuracyDict = createAccuracyDict(allResults)
 createPlots(accuracyDict)
