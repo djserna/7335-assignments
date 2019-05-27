@@ -118,6 +118,7 @@ def createAccuracyDict(results):
                 accuracyDict[k1Test] = [v1]
     return accuracyDict
 
+#the code for this method is pulled directly from Chris's office hours example.
 def createPlots(accuracyDict):
     # for determining maximum frequency (# of kfolds) for histogram y-axis
     n = max(len(v1) for k1, v1 in accuracyDict.items())
