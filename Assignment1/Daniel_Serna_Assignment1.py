@@ -1,10 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Sat Jan 12 10:50:56 2019
-
-@author: Chris
-"""
-
 import numpy as np
 from sklearn.metrics import accuracy_score
 from sklearn.ensemble import RandomForestClassifier
@@ -17,14 +11,22 @@ import matplotlib.pyplot as plt
 
 # Recommend to be done before live class 2
 # 1. Write a function to take a list or dictionary of clfs and hypers ie use logistic regression, each with 3 different sets of hyper parameters for each
+#see runAllClfs function
  
 # Recommend to be done before live class 3
 # 2. expand to include larger number of classifiers and hyperparameter settings
+#added LogisticRegression
+
 # 3. find some simple data
+#imported sklearn datasets and used iris dataset.
+
 # 4. generate matplotlib plots that will assist in identifying the optimal clf and parameters settings
- 
+#see createPlots method
+
 # Recommend to be done before live class 4
 # 5. Please set up your code to be run and save the results to the directory that its executed from
+#createPlots method will also save plots to user's working directory.
+
 # 6. Investigate grid search function
 
 
