@@ -6,6 +6,7 @@
 import numpy as np
 import numpy.lib.recfunctions as rfn
 from collections import OrderedDict
+import matplotlib.pyplot as plt
 
 #NumPy Cheatsheet - https://s3.amazonaws.com/assets.datacamp.com/blog_assets/Numpy_Python_Cheat_Sheet.pdf
 
@@ -117,3 +118,71 @@ np.sum([v1 for k1,v1 in JCode_dict.items()])
 JCodes_PaymentsAgg_descending = OrderedDict(sorted(JCode_dict.items(), key=lambda aJCode: aJCode[1], reverse=True))
 top5JCodes = list(JCodes_PaymentsAgg_descending)[:5]
 print(F"Question 1c: Top 5 J-codes based on payment to providers: {top5JCodes}")
+
+#Question 2a
+unpaid_mask = (Sorted_Jcodes['ProviderPaymentAmount'] == 0)
+
+## find paid row indexes
+paid_mask = (Sorted_Jcodes['ProviderPaymentAmount'] > 0)
+
+#Here are our
+Unpaid_Jcodes = Sorted_Jcodes[unpaid_mask]
+
+Paid_Jcodes = Sorted_Jcodes[paid_mask]
+
+unpaid_dict = {}
+paid_dict = {}
+combined_dict = {}
+for claim in Unpaid_Jcodes:
+    if claim['ProviderID'] in unpaid_dict.keys():
+        unpaid_dict[claim['ProviderID']] += 1
+    else:
+        claim['ProviderID'] not in unpaid_dict.keys()
+        unpaid_dict[claim['ProviderID']] = 1
+        
+for claim in Paid_Jcodes:
+    if claim['ProviderID'] in paid_dict.keys():
+        paid_dict[claim['ProviderID']] += 1
+    else:
+        claim['ProviderID'] not in paid_dict.keys()
+        paid_dict[claim['ProviderID']] = 1
+        
+for key in (unpaid_dict.keys() | paid_dict.keys()):
+    if key in unpaid_dict: combined_dict.setdefault(key, []).append(unpaid_dict[key])
+    if key in paid_dict: combined_dict.setdefault(key, []).append(paid_dict[key])
+
+combinedKeys = list(combined_dict.keys())
+for key in combinedKeys:
+    if len(combined_dict[key]) == 1:
+        del combined_dict[key]
+
+providerArray = []
+unpaidArray = []
+paidArray = []
+
+for key in combined_dict.keys():
+    providerArray.append(key)
+    unpaidArray.append(combined_dict[key][0])
+    paidArray.append(combined_dict[key][1])
+
+plotLabels = providerArray #etc
+
+#Produce the scatterplot as the answer to 2a
+fig, ax = plt.subplots()
+ax.scatter(unpaidArray, paidArray)
+ax.grid(linestyle='-', linewidth='0.75', color='red')
+
+fig = plt.gcf()
+fig.set_size_inches(25, 25)
+plt.rcParams.update({'font.size': 28})
+
+for i, txt in enumerate(plotLabels):
+    ax.annotate(txt, (unpaidArray[i], paidArray[i]))
+
+plt.tick_params(labelsize=35)
+plt.xlabel('# of Unpaid claims', fontsize=35)
+
+plt.ylabel('# of Paid claims', fontsize=35)
+
+plt.title('Scatterplot of Unpaid and Paid claims by Provider', fontsize=45)
+plt.savefig('Paid_Unpaid_Scatterplot.png')
