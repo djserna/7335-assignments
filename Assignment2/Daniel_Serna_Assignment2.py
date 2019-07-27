@@ -3,6 +3,11 @@
 @author: Daniel Serna
 """
 
+'''
+Note, much of this code was inspired by Chris's office hours examples.
+In many cases I used his code as starting point.
+'''
+
 import numpy as np
 import numpy.lib.recfunctions as rfn
 from collections import OrderedDict
