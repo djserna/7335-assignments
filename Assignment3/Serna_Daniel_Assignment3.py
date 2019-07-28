@@ -20,7 +20,7 @@ import numpy as np
 
 # You asked your 10 work friends to answer a survey. They gave you back the following dictionary object.  
 
-#I dont understand how we can support this dictionary structure since there are more properties than the restaurant dictionary.
+#I don't understand how we can support the proposed people dictionary structure since there are more properties than the restaurant dictionary.
 #This needs to match up with the restaurant dictionary structure, so I will not use all the properties.
 
 #Generate random input values for people.
@@ -136,20 +136,17 @@ for k1, v1 in people.items():
             
 
 #here are some lists that show column keys and values
-print(peopleKeys)
-print(peopleValues)
-
-
+#print(peopleKeys)
+#print(peopleValues)
 
 M_people = np.array(peopleValues)
-
 M_people.shape
 
 
 # Next you collected data from an internet website. You got the following information.
 
-#As above, I don't understand how we can support this dictonary structure as it needs to have the same properties
-#as people dictionary, so will not use all properties.
+#As above, I don't understand how we can support this proposed dictonary structure as it needs to have the same number of properties
+#as people dictionary, so I will not use all properties.
 
 #Generate random input for restaurant values.
 valueArrayFlacos = np.random.randint(5, size=4)+1
@@ -206,23 +203,20 @@ for k1, v1 in restaurants.items():
         restaurantsValues.append(v2)
 
 #here are some lists that show column keys and values
-print(restaurantsKeys)
-print(restaurantsValues)
+#print(restaurantsKeys)
+#print(restaurantsValues)
 
-len(restaurantsValues)
-#reshape to 2 rows and 4 columns
+#len(restaurantsValues)
+#reshape to 5 rows and 4 columns
 
-#converting lists to np.arrays is easy
 M_restaurants = np.reshape(restaurantsValues, (5,4))
-
 M_restaurants
-
 M_restaurants.shape
 
 # The most imporant idea in this project is the idea of a linear combination.  
 # Informally describe what a linear combination is  and how it will relate to our resturant matrix.
 
-#In a linear combinatino we are multiplying each term by a constant and summing the results.
+#In a linear combination we are multiplying each term by a constant and summing the results.
 #This relates to our restaurant matrix because multiplying our people matrix by the restaurant matrix
 #will give us a "restaurant score" for each person that we can use to optimize lunch choice.
 
@@ -237,11 +231,31 @@ cheesecakeFactoryScore = M_people[0,0] * M_restaurants[4,0] + M_people[0,1] * M_
 janeScoreArray = np.array([flacoScore, anamiasScore, chilisScore, blueFishScore, cheesecakeFactoryScore])
 maxJaneScore = np.amax(janeScoreArray)
 indexMaxJaneScore = np.where(janeScoreArray == maxJaneScore)
-print(f"Jane's max restaurant score is {maxJaneScore}, which is {list(restaurants.keys())[indexMaxJaneScore[0][0]]}.")
+try:    
+    print(f"Jane's max restaurant score is {maxJaneScore}, which is {list(restaurants.keys())[indexMaxJaneScore[0][0]]}.")
+except:
+    print("Crazy bizarro world where there were duplicate max scores for Jane. Re-run program.")
 
 # Next compute a new matrix (M_usr_x_rest  i.e. an user by restaurant) from all people.  What does the a_ij matrix represent? 
 
+M_new_people = np.swapaxes(M_people, 0, 1)
+M_usr_x_rest = np.matmul(M_restaurants, M_new_people)
+print(M_usr_x_rest)
+
+print("In M_usr_x_rest, the rows represent restaurants and the columns represent people.")
+
 # Sum all columns in M_usr_x_rest to get optimal restaurant for all users.  What do the entry’s represent?
+
+np.sum(M_usr_x_rest, axis=1)
+print("The entrys represent the total score for each restaurant.")
+
+maxRestaurantScore = np.amax(np.sum(M_usr_x_rest, axis=1))
+indexMaxRestaurantScore = np.where(np.sum(M_usr_x_rest, axis=1) == maxRestaurantScore)
+try:    
+    print(f"Max restaurant score is {maxRestaurantScore}, which is {list(restaurants.keys())[indexMaxRestaurantScore[0][0]]}.")
+except:
+    print("Crazy bizarro world where there were duplicate max scores for restaurants. Re-run program.")
+
 
 # Now convert each row in the M_usr_x_rest into a ranking for each user and call it M_usr_x_rest_rank.   Do the same as above to generate the optimal resturant choice.  
 
