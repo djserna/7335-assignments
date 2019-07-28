@@ -154,6 +154,11 @@ valueArrayAnamias = np.random.randint(5, size=4)+1
 valueArrayChilis = np.random.randint(5, size=4)+1
 valueArrayBlueFish = np.random.randint(5, size=4)+1
 valueArrayCheesecakeFactory = np.random.randint(5, size=4)+1
+valueArrayTacoBell = np.random.randint(5, size=4)+1
+valueArrayBurgerKing = np.random.randint(5, size=4)+1
+valueArrayPanchos = np.random.randint(5, size=4)+1
+valueArrayMcDonalds = np.random.randint(5, size=4)+1
+valueArrayWingStop = np.random.randint(5, size=4)+1
 restaurants  = {'Flacos':{'distance' : valueArrayFlacos[0],
                         'novelty' : valueArrayFlacos[1],
                         'cost':  valueArrayFlacos[2],
@@ -188,6 +193,41 @@ restaurants  = {'Flacos':{'distance' : valueArrayFlacos[0],
                         #'average rating': 
                         #'cuisine':
                         'vegitarians': valueArrayCheesecakeFactory[3]
+                        },
+              'TacoBell':{'distance' : valueArrayTacoBell[0],
+                        'novelty' : valueArrayTacoBell[1],
+                        'cost':  valueArrayTacoBell[2],
+                        #'average rating': 
+                        #'cuisine':
+                        'vegitarians': valueArrayTacoBell[3]
+                        },
+              'BurgerKing':{'distance' : valueArrayBurgerKing[0],
+                        'novelty' : valueArrayBurgerKing[1],
+                        'cost':  valueArrayBurgerKing[2],
+                        #'average rating': 
+                        #'cuisine':
+                        'vegitarians': valueArrayBurgerKing[3]
+                        },
+              'Panchos':{'distance' : valueArrayPanchos[0],
+                        'novelty' : valueArrayPanchos[1],
+                        'cost':  valueArrayPanchos[2],
+                        #'average rating': 
+                        #'cuisine':
+                        'vegitarians': valueArrayPanchos[3]
+                        },
+              'McDonalds':{'distance' : valueArrayMcDonalds[0],
+                        'novelty' : valueArrayMcDonalds[1],
+                        'cost':  valueArrayMcDonalds[2],
+                        #'average rating': 
+                        #'cuisine':
+                        'vegitarians': valueArrayMcDonalds[3]
+                        },
+              'WingStop':{'distance' : valueArrayWingStop[0],
+                        'novelty' : valueArrayWingStop[1],
+                        'cost':  valueArrayWingStop[2],
+                        #'average rating': 
+                        #'cuisine':
+                        'vegitarians': valueArrayWingStop[3]
                         }
   
 }
@@ -209,7 +249,7 @@ for k1, v1 in restaurants.items():
 #len(restaurantsValues)
 #reshape to 5 rows and 4 columns
 
-M_restaurants = np.reshape(restaurantsValues, (5,4))
+M_restaurants = np.reshape(restaurantsValues, (10,4))
 M_restaurants
 M_restaurants.shape
 
@@ -227,8 +267,13 @@ anamiasScore = M_people[0,0] * M_restaurants[1,0] + M_people[0,1] * M_restaurant
 chilisScore = M_people[0,0] * M_restaurants[2,0] + M_people[0,1] * M_restaurants[2,1] + M_people[0,2] * M_restaurants[2,2] + M_people[0,3] * M_restaurants[2,3]
 blueFishScore = M_people[0,0] * M_restaurants[3,0] + M_people[0,1] * M_restaurants[3,1] + M_people[0,2] * M_restaurants[3,2] + M_people[0,3] * M_restaurants[3,3]
 cheesecakeFactoryScore = M_people[0,0] * M_restaurants[4,0] + M_people[0,1] * M_restaurants[4,1] + M_people[0,2] * M_restaurants[4,2] + M_people[0,3] * M_restaurants[4,3]
+tacoBellScore = M_people[0,0] * M_restaurants[5,0] + M_people[0,1] * M_restaurants[5,1] + M_people[0,2] * M_restaurants[5,2] + M_people[0,3] * M_restaurants[5,3]
+burgerKingScore = M_people[0,0] * M_restaurants[6,0] + M_people[0,1] * M_restaurants[6,1] + M_people[0,2] * M_restaurants[6,2] + M_people[0,3] * M_restaurants[6,3]
+panchosScore = M_people[0,0] * M_restaurants[7,0] + M_people[0,1] * M_restaurants[7,1] + M_people[0,2] * M_restaurants[7,2] + M_people[0,3] * M_restaurants[7,3]
+mcDonaldsScore = M_people[0,0] * M_restaurants[8,0] + M_people[0,1] * M_restaurants[8,1] + M_people[0,2] * M_restaurants[8,2] + M_people[0,3] * M_restaurants[8,3]
+wingStopScore = M_people[0,0] * M_restaurants[9,0] + M_people[0,1] * M_restaurants[9,1] + M_people[0,2] * M_restaurants[9,2] + M_people[0,3] * M_restaurants[9,3]
 
-janeScoreArray = np.array([flacoScore, anamiasScore, chilisScore, blueFishScore, cheesecakeFactoryScore])
+janeScoreArray = np.array([flacoScore, anamiasScore, chilisScore, blueFishScore, cheesecakeFactoryScore, tacoBellScore, burgerKingScore, panchosScore, mcDonaldsScore, wingStopScore])
 maxJaneScore = np.amax(janeScoreArray)
 indexMaxJaneScore = np.where(janeScoreArray == maxJaneScore)
 try:    
@@ -246,7 +291,7 @@ print("In M_usr_x_rest, the rows represent restaurants and the columns represent
 
 # Sum all columns in M_usr_x_rest to get optimal restaurant for all users.  What do the entry’s represent?
 
-np.sum(M_usr_x_rest, axis=1)
+print(np.sum(M_usr_x_rest, axis=1))
 print("The entrys represent the total score for each restaurant.")
 
 maxRestaurantScore = np.amax(np.sum(M_usr_x_rest, axis=1))
@@ -259,10 +304,29 @@ except:
 
 # Now convert each row in the M_usr_x_rest into a ranking for each user and call it M_usr_x_rest_rank.   Do the same as above to generate the optimal resturant choice.  
 
+sortedResults = M_usr_x_rest.argsort()[::-1]
+sortedResults
+
+
+np.sum(sortedResults, axis=1)
+
+
+temp = M_usr_x_rest.argsort() 
+M_usr_x_rest_rank = np.arange(len(M_usr_x_rest))[temp.argsort()]+1
+
+#compare ranks to results                 
+M_usr_x_rest                
+print(np.sum(M_usr_x_rest, axis=1))            
+print(np.sum(M_usr_x_rest_rank, axis=1))
+
+
 # Why is there a difference between the two?  What problem arrives?  What does represent in the real world?
+print("There is a difference because utimately the entire group of people have a ranking score that adds up to a constant value.",
+      "This represents the real world situation where taking all aspects into account, the entire group cannot make an optimal choice", 
+      " as each restaurant is optimal for a sub group of people.")
 
 # How should you preprocess your data to remove this problem. 
-
+print("We should pre-process our data so we take groups of people into account.")
 # Find  user profiles that are problematic, explain why?
 
 # Think of two metrics to compute the disatistifaction with the group.  
@@ -270,7 +334,7 @@ except:
 # Should you split in two groups today? 
 
 # Ok. Now you just found out the boss is paying for the meal. How should you adjust. Now what is best restaurant?
-
+print("If the boss is paying, then cost consideration is no longer a factor. We should remove this property from our scoring.")
 # Tommorow you visit another team. You have the same restaurants and they told you their optimal ordering for restaurants.  Can you find their weight matrix? 
 
 

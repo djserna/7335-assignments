@@ -279,7 +279,7 @@ np.matmul(a,b)
 
 restaurantsMatrix.shape, peopleMatrix.shape
 #However, this won't work...
-np.matmul(restaurantsMatrix, peopleMatrix)
+#np.matmul(restaurantsMatrix, peopleMatrix)
 
 # The most imporant idea in this project is the idea of a linear combination.
 
@@ -313,7 +313,7 @@ restaurantsMatrix.shape, newPeopleMatrix.shape
 #Let's check our answers
 
 
-np.set_printoptions(threshold=np.nan)
+#np.set_printoptions(threshold=np.nan)
 
 results = np.matmul(restaurantsMatrix, newPeopleMatrix)
 

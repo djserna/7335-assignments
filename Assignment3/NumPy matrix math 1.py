@@ -148,7 +148,7 @@ np.dot(c,d)
 # matmul give the matrix product, too.
 np.matmul(a,b)
 #However, this won't work...
-np.matmul(restaurantsMatrix, peopleMatrix)
+#np.matmul(restaurantsMatrix, peopleMatrix)
 
 #Why?
 restaurantsMatrix.shape, peopleMatrix.shape
