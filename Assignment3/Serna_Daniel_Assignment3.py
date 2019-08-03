@@ -2,8 +2,11 @@
 """
 Created on Sat Jul 27 18:54:37 2019
 
-@author: User
+@author: Daniel Serna
 """
+
+#Note, utilized Chris's office hours code as a starting point.
+
 import numpy as np
 
 # Decision making with Matrices
@@ -292,7 +295,7 @@ print("In M_usr_x_rest, the rows represent restaurants and the columns represent
 # Sum all columns in M_usr_x_rest to get optimal restaurant for all users.  What do the entry’s represent?
 
 print(np.sum(M_usr_x_rest, axis=1))
-print("The entrys represent the total score for each restaurant.")
+print("The entries represent the total score for each restaurant.")
 
 maxRestaurantScore = np.amax(np.sum(M_usr_x_rest, axis=1))
 indexMaxRestaurantScore = np.where(np.sum(M_usr_x_rest, axis=1) == maxRestaurantScore)
@@ -307,35 +310,152 @@ except:
 sortedResults = M_usr_x_rest.argsort()[::-1]
 sortedResults
 
+maxRowIndex = np.argmax(sortedResults, axis=0)
+print(maxRowIndex)
 
-np.sum(sortedResults, axis=1)
-
-
-temp = M_usr_x_rest.argsort() 
-M_usr_x_rest_rank = np.arange(len(M_usr_x_rest))[temp.argsort()]+1
-
-#compare ranks to results                 
-M_usr_x_rest                
-print(np.sum(M_usr_x_rest, axis=1))            
-print(np.sum(M_usr_x_rest_rank, axis=1))
-
+for i, optimalRestaurant in enumerate(maxRowIndex):
+    print(f"Max restaurant score for {list(people.keys())[i]} is {list(restaurants.keys())[optimalRestaurant]}.")
 
 # Why is there a difference between the two?  What problem arrives?  What does represent in the real world?
-print("There is a difference because utimately the entire group of people have a ranking score that adds up to a constant value.",
-      "This represents the real world situation where taking all aspects into account, the entire group cannot make an optimal choice", 
-      " as each restaurant is optimal for a sub group of people.")
+print("There is a difference because there may be groups of people with similar optimal choices.",
+      "This represents the real world situation where taking all people into account, the entire group cannot make an optimal choice", 
+      "as each restaurant may be optimal for a sub group of people.")
 
 # How should you preprocess your data to remove this problem. 
 print("We should pre-process our data so we take groups of people into account.")
 # Find  user profiles that are problematic, explain why?
 
+print(M_people)
+print(people.keys())
+print("People will very low scores for certain criteria could be problematic. Andy has a value of 0.007", 
+      "for willingness to travel which could be problematic. Daniel has a value of 0.001 for desire for new experience",
+      "which could be problematic. These low criteria scores could make it difficult for an optimal restaurant choice to be found for the group.")
+
 # Think of two metrics to compute the disatistifaction with the group.  
 
+print("We could take the difference between the group’s optimal restaurant score, and each individual’s optimal restaurant score.",
+      "The difference between these values could be considered a “dissatisfaction score” for each person.\n")
+print("We could also look at highly ranked criteria for each person and determine if that was in alignment with the group's restaurant choice.",
+      "For example, if cost > .75 for an individual, if the chosen restaurant is not highly ranked with cost we could consider that dissatisfaction.")
+
 # Should you split in two groups today? 
+print("Since the group's optimal restaurant choice of Cheesecake Factory is not in alignment with any individual's optimal restaurant choice, we should split into 2 groups.")
 
 # Ok. Now you just found out the boss is paying for the meal. How should you adjust. Now what is best restaurant?
-print("If the boss is paying, then cost consideration is no longer a factor. We should remove this property from our scoring.")
+people = {'Jane': {'willingness to travel': valueArrayJane[0,0,0],
+                  'desire for new experience': valueArrayJane[0,0,1],
+                  'cost': 0.0,
+                  #'indian food':
+                  #'mexican food':
+                  #'hipster points':
+                  'vegitarian': valueArrayJane[0,0,3]
+                  },
+          'Jack': {'willingness to travel': valueArrayJack[0,0,0],
+                  'desire for new experience': valueArrayJack[0,0,1],
+                  'cost': 0.0,
+                  #'indian food':
+                  #'mexican food':
+                  #'hipster points':
+                  'vegitarian': valueArrayJack[0,0,3]
+                  },
+          'Jill': {'willingness to travel': valueArrayJill[0,0,0],
+                  'desire for new experience': valueArrayJill[0,0,1],
+                  'cost': 0.0,
+                  #'indian food':
+                  #'mexican food':
+                  #'hipster points':
+                  'vegitarian': valueArrayJill[0,0,3]
+                  },
+          'Tim': {'willingness to travel': valueArrayTim[0,0,0],
+                  'desire for new experience': valueArrayTim[0,0,1],
+                  'cost': 0.0,
+                  #'indian food':
+                  #'mexican food':
+                  #'hipster points':
+                  'vegitarian': valueArrayTim[0,0,3]
+                  },
+          'Bob': {'willingness to travel': valueArrayBob[0,0,0],
+                  'desire for new experience': valueArrayBob[0,0,1],
+                  'cost': 0.0,
+                  #'indian food':
+                  #'mexican food':
+                  #'hipster points':
+                  'vegitarian': valueArrayBob[0,0,3]
+                  },
+          'Andy': {'willingness to travel': valueArrayAndy[0,0,0],
+                  'desire for new experience': valueArrayAndy[0,0,1],
+                  'cost': 0.0,
+                  #'indian food':
+                  #'mexican food':
+                  #'hipster points':
+                  'vegitarian': valueArrayAndy[0,0,3]
+                  },
+          'Charlie': {'willingness to travel': valueArrayCharlie[0,0,0],
+                  'desire for new experience': valueArrayCharlie[0,0,1],
+                  'cost': 0.0,
+                  #'indian food':
+                  #'mexican food':
+                  #'hipster points':
+                  'vegitarian': valueArrayCharlie[0,0,3]
+                  },
+          'Pete': {'willingness to travel': valueArrayPete[0,0,0],
+                  'desire for new experience': valueArrayPete[0,0,1],
+                  'cost': 0.0,
+                  #'indian food':
+                  #'mexican food':
+                  #'hipster points':
+                  'vegitarian': valueArrayPete[0,0,3]
+                  },
+          'Daniel': {'willingness to travel': valueArrayDaniel[0,0,0],
+                  'desire for new experience': valueArrayDaniel[0,0,1],
+                  'cost': 0.0,
+                  #'indian food':
+                  #'mexican food':
+                  #'hipster points':
+                  'vegitarian': valueArrayDaniel[0,0,3]
+                  },
+          'Brad': {'willingness to travel': valueArrayBrad[0,0,0],
+                  'desire for new experience': valueArrayBrad[0,0,1],
+                  'cost': 0.0,
+                  #'indian food':
+                  #'mexican food':
+                  #'hipster points':
+                  'vegitarian': valueArrayBrad[0,0,3]
+                  }
+          }          
+peopleKeys, peopleValues = [], []
+lastKey = 0
+for k1, v1 in people.items():
+    row = []
+    
+    for k2, v2 in v1.items():
+        peopleKeys.append(k1+'_'+k2)
+        if k1 == lastKey:
+            row.append(v2)      
+            lastKey = k1
+            
+        else:
+            peopleValues.append(row)
+            row.append(v2)   
+            lastKey = k1
+
+M_people = np.array(peopleValues)
+
+M_new_people = np.swapaxes(M_people, 0, 1)
+M_usr_x_rest = np.matmul(M_restaurants, M_new_people)
+print(M_usr_x_rest)
+
+print(np.sum(M_usr_x_rest, axis=1))
+
+maxRestaurantScore = np.amax(np.sum(M_usr_x_rest, axis=1))
+indexMaxRestaurantScore = np.where(np.sum(M_usr_x_rest, axis=1) == maxRestaurantScore)
+print("If the boss is paying, then cost consideration is no longer a factor. We should set this criteria to 0 for each person and re-run.")
+try:    
+    print(f"Max restaurant score when cost is 0 is {maxRestaurantScore}, which is {list(restaurants.keys())[indexMaxRestaurantScore[0][0]]}.")
+except:
+    print("Crazy bizarro world where there were duplicate max scores for restaurants. Re-run program.")
+
+
 # Tommorow you visit another team. You have the same restaurants and they told you their optimal ordering for restaurants.  Can you find their weight matrix? 
-
-
+print("Yes, you could multiply the restaurant matrix by the transpose of the ordering matrix to find the weight matrix.")
 
